@@ -1,0 +1,21 @@
+{
+  "_id": {
+    "$oid": "618c865fea1e15b638fdf383"
+  },
+  "name": "proyecto1",
+  "generalObjetive": "prueba 1",
+  "SpecificObjetives": [
+    "primer documento"
+  ],
+  "budget": 5000,
+  "endDate": {
+    "$date": "2021-12-10T05:00:00Z"
+  },
+  "leaderDocumentId": 123456789,
+  "leaderName": "Jose",
+  "phase": "started",
+  "startDate": {
+    "$date": "2021-12-09T05:00:00Z"
+  },
+  "status": "active"
+}

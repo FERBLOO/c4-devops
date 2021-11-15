@@ -1,0 +1,102 @@
+// MongoDB Playground
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+
+const database = 'ciclo4-db';
+let collection = 'users';
+
+// Create a new database.
+use(database);
+
+// Create a new collection.
+db.createCollection(collection, {
+  validator: {
+    $jsonSchema: {
+      required: ['email', 'documentId', 'name', 'lastName', 'role', 'status'],
+      properties: {
+        email: {
+          bsonType: 'string'
+        },
+        documentId: {
+          bsonType: 'long'
+        },
+        name: {
+          bsonType: 'string'
+        },
+        lastName: {
+          bsonType: 'string'
+        },
+        fullname: {
+          bsonType: 'string'
+        },
+        role: {
+          enum: ['admin', 'leader', 'student']
+        },
+        status: {
+          enum: ['pending', 'authorized', 'unauthorized']
+        },
+        password: {
+          bsonType: 'binData'
+        }
+      }
+    }
+  }
+
+});
+
+// Create unique index for ameil and documentId
+db.getCollection(collection).createIndex({ email: 1}, {unique: true});
+db.getCollection(collection).createIndex({ documentId: 1}, {unique: true});
+
+const users = [
+  {
+    "email": "jose.cortes@mail.com",
+    "documentId": Long ("123456"),
+    "name": "Jose",
+    "lastName": "Cortes",
+    "role": "admin",
+    "status": "authorized",
+    "password": "246810",
+  },
+  {
+    "email": "jose.cortes@mail.com",
+    "documentId": Long ("123456"),
+    "name": "Fernando",
+    "lastName": "Rozo",
+    "role": "leader",
+    "status": "pending",
+    "password": "246810",
+  },
+
+
+]
+
+// The prototype form to create a regular collection:
+/* db.createCollection( <name>,
+  {
+    capped: <boolean>,
+    autoIndexId: <boolean>,
+    size: <number>,
+    max: <number>,
+    storageEngine: <document>,
+    validator: <document>,
+    validationLevel: <string>,
+    validationAction: <string>,
+    indexOptionDefaults: <document>,
+    viewOn: <string>,
+    pipeline: <pipeline>,
+    collation: <document>,
+    writeConcern: <document>
+  }
+) */
+
+// The prototype form to create a time-series collection:
+/* db.createCollection( <name>,
+  {
+    timeseries: {
+      timeField: <string>,
+      metaField: <string>,
+      granularity: <string>
+    },
+    expireAfterSeconds: <number>
+  }
+) */

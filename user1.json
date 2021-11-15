@@ -1,0 +1,11 @@
+{
+  "_id": {
+    "$oid": "618c6148013e02ccafb4ea73"
+  },
+  "name": "jose",
+  "lastName": "cortes",
+  "email": "jose@mail.com",
+  "documentId": 123456,
+  "role": "admin",
+  "status": "authorized"
+}
