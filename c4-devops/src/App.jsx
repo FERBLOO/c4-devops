@@ -1,11 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+//vendors
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+
+
+//Styles
+import './App.scss';
+
+//views
+import Home from './home/home.view';
+
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <Router>
+          <Route path="/" exact>
+          <Home />
+          </Route>
+          </Routes>
+          </Router>
+
+
+        {/* <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
@@ -16,7 +32,7 @@ function App() {
           rel="noopener noreferrer"
         >
           Learn React
-        </a>
+        </a> */}
       </header>
     </div>
   );
