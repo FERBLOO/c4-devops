@@ -7,32 +7,16 @@ import './App.scss';
 
 //views
 import Home from './home/home.view';
-
+import Projects from  'projects/views/projects.view';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Router>
-          <Route path="/" exact>
-          <Home />
-          </Route>
-          </Routes>
-          </Router>
-
-
-        {/* <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a> */}
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path='projects' element={<Projects />} />
+        </Routes>
       </header>
     </div>
   );
