@@ -1,13 +1,12 @@
-//vendors
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+// vendors
+import { Route, Routes } from 'react-router-dom';
 
+// styles
+import 'styles/App.scss';
 
-//Styles
-import './App.scss';
-
-//views
-import Home from './home/home.view';
-import Projects from  'projects/views/projects.view';
+// views
+import Home from 'home/views/home.view';
+import Projects from 'projects/views/projects.view';
 
 function App() {
   return (
@@ -15,7 +14,7 @@ function App() {
       <header className="App-header">
         <Routes>
           <Route index element={<Home />} />
-          <Route path='projects' element={<Projects />} />
+          <Route path="projects" element={<Projects />} />
         </Routes>
       </header>
     </div>

@@ -1,19 +1,53 @@
+// vendors
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { BrowserRouter as Router } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
+import {
+  ApolloProvider,
+  ApolloClient,
+  createHttpLink,
+  InMemoryCache
+} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+
+// styles
+import 'styles/index.scss';
+
+// components
+import App from './App';
+
+const httpLink = createHttpLink({
+  uri: 'https://api.github.com/graphql'
+});
+
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = process.env.REACT_APP_GITHUB_PERSONAL_TOKEN;
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    }
+  }
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache()
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-
-// token github: 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
-
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
