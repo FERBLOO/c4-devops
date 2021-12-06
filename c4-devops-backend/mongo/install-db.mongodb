@@ -25,7 +25,7 @@ db.createCollection(collection, {
           pattern: '^[a-z0-9+_.-]+@[a-z0-9.-]+$'
         },
         documentId: {
-          bsonType: 'long',
+          bsonType: 'number',
         },
         name: {
           bsonType: 'string'
@@ -37,10 +37,10 @@ db.createCollection(collection, {
           bsonType: 'string'
         },
         role: {
-          enum: ["admin", "leader", "student"]
+          enum: ["ADMIN", "LEADER", "STUDENT"]
         },
         status: {
-          enum: ["pending", "authorized", "unauthorized"]
+          enum: ["PENDING", "AUTHORIZED", "UNAUTHORIZED"]
         },
         password: {
           bsonType: 'string'
@@ -56,53 +56,63 @@ db.getCollection(collection).createIndex({ documentId: 1 }, { unique: true });
 
 const users = [
   {
+    "email": "jose.cortes@mail.com",
+    "documentId": 1025751230,
+    "name": "Jose",
+    "lastName": "Cortes",
+    "fullName": "Jose Cortes",
+    "role": "ADMIN",
+    "status": "AUTHORIZED",
+    "password": "Aur8snuh6y"
+  },
+  {
     "email": "tomas.anderson@mail.com",
-    "documentId": Long('1020345678'),
+    "documentId": 1020345678,
     "name": "Tomas",
     "lastName": "Anderson",
     "fullName": "Tomas Anderson",
-    "role": "admin",
-    "status": "pending",
-    "password": "$2a$10$FEBywZh8u9M0Cec/0mWep.1kXrwKeiWDba6tdKvDfEBjyePJnDT7K"
+    "role": "ADMIN",
+    "status": "AUTHORIZED",
+    "password": "4nd3rs0n"
   },
   {
     "email": "peter.griffin@mail.com",
-    "documentId": Long('1234567890'),
+    "documentId": 1234567890,
     "name": "Peter",
     "lastName": "Griffin",
     "fullName": "Peter Griffin",
-    "role": "student",
-    "status": "pending",
+    "role": "STUDENT",
+    "status": "PENDING",
     "password": "$2a$10$FEBywZh8u9M0Cec/0mWep.1kXrwKeiWDba6tdKvDfEBjyePJnDT7K"
   },
   {
     "email": "walter.white@mail.com",
-    "documentId": Long('1025342546'),
+    "documentId": 1025342546,
     "name": "Walter",
     "lastName": "White",
     "fullName": "Walter White",
-    "role": "leader",
-    "status": "pending",
+    "role": "LEADER",
+    "status": "PENDING",
     "password": "$2a$10$FEBywZh8u9M0Cec/0mWep.1kXrwKeiWDba6tdKvDfEBjyePJnDT7K"
   },
   {
     "email": "rick.sanchez@mail.com",
-    "documentId": Long('1021587653'),
+    "documentId": 1021587653,
     "name": "Rick",
     "lastName": "Sanchez",
     "fullName": "Rick Sanchez",
-    "role": "student",
-    "status": "pending",
+    "role": "STUDENT",
+    "status": "PENDING",
     "password": "$2a$10$FEBywZh8u9M0Cec/0mWep.1kXrwKeiWDba6tdKvDfEBjyePJnDT7K"
   },
   {
     "email": "john.snow@mail.com",
-    "documentId": Long('1022351234'),
+    "documentId": 1022351234,
     "name": "John",
     "lastName": "Snow",
     "fullName": "John Snow",
-    "role": "leader",
-    "status": "pending",
+    "role": "LEADER",
+    "status": "PENDING",
     "password": "$2a$10$FEBywZh8u9M0Cec/0mWep.1kXrwKeiWDba6tdKvDfEBjyePJnDT7K"
   }
 ];
@@ -133,7 +143,7 @@ db.createCollection(collection, {
           bsonType: 'array'
         },
         budget: {
-          bsonType: 'decimal'
+          bsonType: 'number'
         },
         startDate: {
           bsonType: 'date'
@@ -145,10 +155,10 @@ db.createCollection(collection, {
           bsonType: 'objectId'
         },
         status: {
-          enum: ['active', 'inactive']
+          enum: ['ACTIVE', 'INACTIVE']
         },
         phase: {
-          enum: ['started', 'in progress', 'ended']
+          enum: ['STARTED', 'IN PROGRESS', 'ENDED']
         }
       }
     }
@@ -157,6 +167,17 @@ db.createCollection(collection, {
 
 const projects = [
   {
+    "name": "Project 10",
+    "generalObjective": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent nisl augue, ultrices non placerat maximus, feugiat nec mauris.",
+    "specificObjectives": ["Lorem ipsum dolor sit amet, consectetur adipiscing elit", "Praesent nisl augue, ultrices non placerat maximus, feugiat nec mauris."],
+    "budget": Decimal128('200'),
+    "startDate": new Date(),
+    "endDate": new Date(new Date().getTime() + 60*24*60*60000),
+    "leader_id": db.users.findOne({email: 'jose.cortes@mail.com'})._id,
+    "status": "ACTIVE",
+    "Phase": "IN PROGRESS"
+  },
+  {
     "name": "Project 1",
     "generalObjective": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent nisl augue, ultrices non placerat maximus, feugiat nec mauris.",
     "specificObjectives": ["Lorem ipsum dolor sit amet, consectetur adipiscing elit", "Praesent nisl augue, ultrices non placerat maximus, feugiat nec mauris."],
@@ -164,7 +185,8 @@ const projects = [
     "startDate": new Date(),
     "endDate": new Date(new Date().getTime() + 60*24*60*60000),
     "leader_id": db.users.findOne({email: 'walter.white@mail.com'})._id,
-    "status": "inactive",
+    "status": "INACTIVE",
+    "Phase": "ENDED"
   },
   {
     "name": "Project 2",
@@ -174,7 +196,7 @@ const projects = [
     "startDate": new Date(),
     "endDate": new Date(new Date().getTime() + 60*24*60*60000),
     "leader_id": db.users.findOne({email: 'walter.white@mail.com'})._id,
-    "status": "inactive",
+    "status": "INACTIVE",
   },
   {
     "name": "Project 3",
@@ -184,7 +206,7 @@ const projects = [
     "startDate": new Date(),
     "endDate": new Date(new Date().getTime() + 60*24*60*60000),
     "leader_id": db.users.findOne({email: 'john.snow@mail.com'})._id,
-    "status": "inactive",
+    "status": "INACTIVE",
   },
   {
     "name": "Project 4",
@@ -194,7 +216,7 @@ const projects = [
     "startDate": new Date(),
     "endDate": new Date(new Date().getTime() + 60*24*60*60000),
     "leader_id": db.users.findOne({email: 'john.snow@mail.com'})._id,
-    "status": "inactive",
+    "status": "INACTIVE",
   }
 ];
 
@@ -220,7 +242,7 @@ db.createCollection(collection, {
           bsonType: 'objectId'
         },
         status: {
-          enum: ['acepted', 'rejected']
+          enum: ['ACEPTED', 'REJECTED']
         },
         enrollmentDate: {
           bsonType: 'date'
@@ -238,8 +260,14 @@ db.getCollection(collection).createIndex({ project_id: 1, user_id: 1 }, { unique
 
 const enrollments = [
   {
+    "project_id": db.projects.findOne({name: 'Project 10'}, {_id: 1})._id,
+    "user_id": db.users.findOne({email: 'jose.cortes@mail.com'}, {_id: 1})._id,
+    "status": "ACEPTED"
+  },
+  {
     "project_id": db.projects.findOne({name: 'Project 1'}, {_id: 1})._id,
-    "user_id": db.users.findOne({email: 'peter.griffin@mail.com'}, {_id: 1})._id
+    "user_id": db.users.findOne({email: 'peter.griffin@mail.com'}, {_id: 1})._id,
+    "status": "ACEPTED"
   },
   {
     "project_id": db.projects.findOne({name: 'Project 1'}, {_id: 1})._id,
@@ -292,6 +320,17 @@ db.createCollection(collection, {
 });
 
 const advances = [
+  {
+    "project_id": db.projects.findOne({name: 'Project 10'}, {_id: 1})._id,
+    "addDate": new Date(),
+    "description": 'adipiscing elit. Praesent nisl augue, ultrices non placerat maximus, feugiat nec mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent posuere eros libero, eu hendrerit leo maximus congue. Aliquam accumsan tortor quis suscipit imperdiet. Pellentesque blandit augue lacus, at sollicitudin orci luctus sit amet. Donec et ornare leo. Fusce sollicitudin eros a nisi ullamcorper, porttitor eleifend massa luctus. Morbi luctus tellus dui, et commodo justo euismod eget.',
+    "observations": 'consectetur adipiscing elit. Aliquam in dui et eros varius efficitur ut eget ex. Fusce faucibus dictum velit eget ultricies. Ut vitae efficitur ligula, nec interdum lacus. Phasellus id interdum neque. Fusce et velit id orci tempus maximus. Nam aliquam tincidunt tellus, eu condimentum sapien dictum sit amet. Aenean dictum volutpat facilisis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc sit amet orci non nisi pharetra fringilla.',
+    "observations": 'consectetur adipiscing elit. Aliquam in dui et eros varius efficitur ut eget ex. Fusce faucibus dictum velit eget ultricies. Ut vitae efficitur ligula, nec interdum lacus. Phasellus id interdum neque. Fusce et velit id orci tempus maximus. Nam aliquam tincidunt tellus, eu condimentum sapien dictum sit amet. Aenean dictum volutpat facilisis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc sit amet orci non nisi pharetra fringilla.',
+    "observations": 'consectetur adipiscing elit. Aliquam in dui et eros varius efficitur ut eget ex. Fusce faucibus dictum velit eget ultricies. Ut vitae efficitur ligula, nec interdum lacus. Phasellus id interdum neque. Fusce et velit id orci tempus maximus. Nam aliquam tincidunt tellus, eu condimentum sapien dictum sit amet. Aenean dictum volutpat facilisis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc sit amet orci non nisi pharetra fringilla.',
+    "observations": 'consectetur adipiscing elit. Aliquam in dui et eros varius efficitur ut eget ex. Fusce faucibus dictum velit eget ultricies. Ut vitae efficitur ligula, nec interdum lacus. Phasellus id interdum neque. Fusce et velit id orci tempus maximus. Nam aliquam tincidunt tellus, eu condimentum sapien dictum sit amet. Aenean dictum volutpat facilisis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc sit amet orci non nisi pharetra fringilla.',
+    "observations": 'consectetur adipiscing elit. Aliquam in dui et eros varius efficitur ut eget ex. Fusce faucibus dictum velit eget ultricies. Ut vitae efficitur ligula, nec interdum lacus. Phasellus id interdum neque. Fusce et velit id orci tempus maximus. Nam aliquam tincidunt tellus, eu condimentum sapien dictum sit amet. Aenean dictum volutpat facilisis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc sit amet orci non nisi pharetra fringilla.',
+    "observations": 'consectetur adipiscing elit. Aliquam in dui et eros varius efficitur ut eget ex. Fusce faucibus dictum velit eget ultricies. Ut vitae efficitur ligula, nec interdum lacus. Phasellus id interdum neque. Fusce et velit id orci tempus maximus. Nam aliquam tincidunt tellus, eu condimentum sapien dictum sit amet. Aenean dictum volutpat facilisis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc sit amet orci non nisi pharetra fringilla.'
+  },
   {
     "project_id": db.projects.findOne({name: 'Project 1'}, {_id: 1})._id,
     "addDate": new Date(),

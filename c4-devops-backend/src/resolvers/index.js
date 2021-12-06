@@ -1,18 +1,28 @@
 import userResolver from "./user.resolver.js";
 import projectResolver from "./project.resolver.js";
+import enrollmentResolver from "./enrollment.resolver.js";
+import miscResolver from "./misc.resolver.js";
 
-const { Query: userQueries, Mutation: userMutations, ...userRest } = userResolver;
-const { Query: projectQueries, Mutation: projectMutations, ...projectRest } = projectResolver;
+const { userQueries, userMutations, ...userRest } = userResolver;
+const { projectQueries, projectMutations, ...projectRest } = projectResolver;
+const { enrollmentQueries, enrollmentMutations, ...enrollmentRest} = enrollmentResolver;
+const { miscQueries, miscMutations, ...miscRest} = miscResolver;
 
-export default{
+export default {
   Query: {
     ...userQueries,
     ...projectQueries,
+    ...enrollmentQueries,
+    ...miscQueries,
   },
   Mutation: {
     ...userMutations,
     ...projectMutations,
+    ...enrollmentMutations,
+    ...miscMutations,
   },
   ...userRest,
-  ...projectRest
+  ...projectRest,
+  ...enrollmentRest,
+  ...miscRest,
 };

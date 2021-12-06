@@ -2,7 +2,7 @@
 // Use Ctrl+Space inside a snippet or a string literal to trigger completions.
 
 // BD name
-const database = 'c4-devops-db';
+const database = 'mt-c4-db';
 
 // The current database to use.
 use(database);

@@ -6,10 +6,12 @@ import reportWebVitals from './reportWebVitals';
 import {
   ApolloProvider,
   ApolloClient,
-  createHttpLink,
-  InMemoryCache
+  HttpLink,
+  InMemoryCache,
+  from,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { onError } from "@apollo/client/link/error";
 
 // styles
 import 'styles/index.scss';
@@ -17,24 +19,47 @@ import 'styles/index.scss';
 // components
 import App from './App';
 
-const httpLink = createHttpLink({
-  uri: 'https://api.github.com/graphql'
+const httpLink = new HttpLink({
+  // eslint-disable-next-line no-undef
+  uri: process.env.REACT_APP_API_URL
 });
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
-  const token = process.env.REACT_APP_GITHUB_PERSONAL_TOKEN;
+  // eslint-disable-next-line no-undef
+  const token = sessionStorage.getItem('token');
   // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+      authorization: token ? token : "",
     }
   }
 });
 
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    graphQLErrors.forEach(({ message, locations, path, extensions }) => {
+      switch (extensions.code){
+        case 'UNAUTHENTICATED':
+          window.location.href = '/users/login';
+          break;
+        case 'FORBIDDEN':
+          window.location.href = '/no-access';
+          break;
+        default: 
+          console.log(
+            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+          )
+      }
+    });
+  }  // en caso de falla, aqui va un ;
+
+  if (networkError) console.log(`[Network error]: ${networkError}`);
+});
+
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: from([authLink, errorLink, httpLink]),
   cache: new InMemoryCache()
 });
 

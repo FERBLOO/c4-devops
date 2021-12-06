@@ -9,21 +9,22 @@ const userType = gql`
     name: String!
     lastName: String!
     fullName: String!
-    role: Role!
-    status: userStatus!
+    role: UserRole!
+    status: UserStatus!
+    enrollments: [Enrollment]
   }
 `;
 
 const enums = gql`
   # Enum for role values
-  enum Role {
+  enum UserRole {
     ADMIN
     LEADER
     STUDENT
   }
 
   # Enum for status values
-  enum userStatus {
+  enum UserStatus {
     PENDING
     AUTHORIZED
     UNAUTHORIZED
@@ -37,26 +38,49 @@ const queries = gql`
   }
 
   type Query {
-    user(_id: ID): User
+    userById(_id: ID!): User
+  }
+
+  type Query {
+    user: User!
+  }
+
+  type Query {
+    userByEmail(email: String!): User
   }
 `;
 
 const mutations = gql`
   type Mutation {
-    addUser(input: AddUserInput!): User
+    register(input: RegisterInput!): User!
+  }
+
+  type Mutation {
+    login(email: String!, password: String!): String!
+  }
+
+  type Mutation {
+    updateUser(input: UpdateInput!): User!
   }
 `;
 
 const inputs = gql`
-  input AddUserInput {
+  input RegisterInput {
     email: String!
     documentId: Float!
     name: String!
     lastName: String!
-    fullName: String!
-    role: Role!
-    status: userStatus!
+    role: UserRole!
     password: String!
+  }
+
+  input UpdateInput {
+    email: String
+    documentId: Float
+    name: String
+    lastName: String
+    role: UserRole
+    status: UserStatus
   }
 `;
 
