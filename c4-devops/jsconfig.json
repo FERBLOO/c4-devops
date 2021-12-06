@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.4.17",
-    "@babel/core": "^7.13.0",
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -12,11 +11,9 @@
     "apollo-server-core": "^3.5.0",
     "apollo-server-express": "^3.5.0",
     "dotenv": "^10.0.0",
-    "eslint": "^8.3.0",
     "express": "^4.17.1",
     "graphql": "^16.0.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.14",
+    "mongoose": "^6.0.13",
     "node-sass": "^6.0.1",
     "nodemon": "^2.0.15",
     "react": "^17.0.2",
@@ -51,8 +48,8 @@
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.jsx",
+  "devDependencies": {},
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "devDependencies": {}
+  "license": "ISC"
 }
