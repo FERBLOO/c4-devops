@@ -2,6 +2,16 @@ $enable-cssgrid: true;
 
 @import '~bootstrap/scss/bootstrap';
 
+body {
+  margin: auto;
+  padding: 0%;
+	position: relative;
+  background: #5c258d;
+  background: -webkit-gradient(to right, #f5f4f8, #3f52bd);
+  background: linear-gradient(to right, #f5f4f8, #3f52bd);
+  background-color: #282c34;
+}
+
 .App {
   text-align: center;
 }
@@ -13,7 +23,14 @@ $enable-cssgrid: true;
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    .logo {
+      width: 30%;
+      }
+    
+      .h1 {
+        color: blanchedalmond;
+      }
+    
   }
 }
 
@@ -25,11 +42,15 @@ $enable-cssgrid: true;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: rgb(26, 165, 33);
 }
 
 .App-link {
-  color: #61dafb;
+  color: #ee6d17;
+}
+
+.h1 {
+  color: blanchedalmond;
 }
 
 @keyframes App-logo-spin {
@@ -40,3 +61,8 @@ $enable-cssgrid: true;
     transform: rotate(360deg);
   }
 }
+
+
+  
+  
+

@@ -1,27 +1,26 @@
 // vendors
 import React from "react";
-import { Link } from 'react-router-dom';
+
 
 // assets
-import logo from 'assets/logo.svg';
+
 
 const Home = () => {
+  
   return (
     <>
-      <img src={logo} className="App-logo" alt="logo" />
+      <title>Bienvenido al módulo de proyectos</title>
+      
       <p>
-        Edit <code>src/App.js</code> and save to reload.
+      <h1>Gestión de proyectos universitarios</h1>
+      Bienvenido al módulo de proyectos
       </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
-      <Link to="projects">{'Go to projects'}</Link>
+      
+      <img src="./assets/img/laptop.png" alt="" />
+      
+
     </>
+    
   );
 };
 

@@ -6,6 +6,9 @@ const USERS = gql `
   query AllUsers {
     allUsers {
       fullName
+      email
+      name
+
     }
   }
 `;
@@ -16,5 +19,7 @@ const Users = () => {
 
   return <>{!data ? <></> : 'Usuarios'}</>
 };
+
+
 
 export default Users;
