@@ -14,8 +14,8 @@ import { setContext } from '@apollo/client/link/context';
 import { onError } from "@apollo/client/link/error";
 
 // styles
-import 'styles/index.scss';
-
+//import 'styles/index.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
 // components
 import App from './App';
 
