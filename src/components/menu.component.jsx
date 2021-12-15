@@ -28,7 +28,7 @@ const handleCloseSession = () => {
             </li>
           </ul>
           <ul className="navbar-nav justify-content-end">
-            {token ? <> Hola, {user?.name}.     <a href="#" onClick={handleCloseSession} className= "nav-link">      Salir </a></> : (
+            {token ? <> Hola, {user?.name}.    <button className= "btn btn-Option" type= "submit">   <a href="#" onClick={handleCloseSession} className= "nav-link">      Salir </a> </button></> : (
               <>
                 <li className="nav-item">
                   <Link className="nav-link" to="/users/login">{'Ingresa'}</Link>
