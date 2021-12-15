@@ -1,95 +1,90 @@
-// vedors
-import React, { useCallback, useEffect, useState } from "react";
-import { useMutation, useQuery, gql } from '@apollo/client';
+// vendors
+import React from "react";
+import { useQuery, gql } from '@apollo/client';
 
-// styles
-import 'projects/styles/projects.styles.scss';
-
-const REPOSITORIES_QUERY = gql`
-  query MyRepositories ($first: Int!){
-    viewer { 
+const PROJECTS = gql `
+  query AllProjects {
+    allProjects {
       name
-      repositories (first: $first){
-        nodes {
-          id
-          name
-          viewerHasStarred
-          stargazers {
-            totalCount
-          }
-        }
+      generalObjective
+      specificObjectives
+      budget
+      leader {
+        email
+        fullName
+        role
+        status
       }
-    }
-  }
-`;
-
-const ADD_START = gql`
-  mutation AddStart($starrableId: ID!) {
-    addStar(input: {
-      starrableId: $starrableId
-    }) {
-      starrable {
-        stargazers {
-          totalCount
-        }
-      }
-    }
-  }
-`;
-
-const REMOVE_START = gql`
-  mutation RemoveStart($starrableId: ID!) {
-    removeStar(input: {
-      starrableId: $starrableId
-    }) {
-      starrable {
-        stargazers {
-          totalCount
-        }
-      }
+      phase
     }
   }
 `;
 
 const Projects = () => {
-  const [first, setFirst] = useState(1);
-  const { data, refetch } = useQuery(REPOSITORIES_QUERY, { variables: { first } });
-  const [addStar] = useMutation(ADD_START, {
-    refetchQueries: [ REPOSITORIES_QUERY ]
-  });
-  const [removeStar] = useMutation(REMOVE_START, {
-    refetchQueries: [ REPOSITORIES_QUERY ]
-  });
+  const { data } = useQuery(PROJECTS);
+  console.log(data);
 
-  const memoizedRefetch = useCallback(() => {
-    refetch();
-  }, [refetch]);
-
-  useEffect(() => {
-    if(first > 1) {
-      memoizedRefetch();
-    }
-  }, [first, memoizedRefetch]);
-
-  return (
+  return <>{!data ? <></> : data?.allProjects?.map(Project =>(
     <>
-      <section className="grid" style={{"--bs-columns": 4, "--bs-gap": '10px 0'}}>
-        <span>{'Repository name'}</span>
-        <span className="g-col-3">{'Stars count'}</span>
-        {data?.viewer?.repositories?.nodes?.map(({ name, stargazers, id, viewerHasStarred }) => (
-        <>
-          <span>{name}</span>
-          <span>{stargazers.totalCount}</span>
-          <span className="g-col-2">
-            {viewerHasStarred ? <button className="btn btn-dark" onClick={() => removeStar({ variables: { starrableId: id } })}>Remove star</button> 
-            : <button className="btn btn-dark" onClick={() => addStar({ variables: { starrableId: id } })}>Add star</button>}
-          </span>
-        </>
-        ))}
-      </section>
-      <button className="btn btn-primary" onClick={() => setFirst(first + 1)}>Load more</button>
-    </>
-  )
+
+
+    <div className="table-responsive">
+  <table className="table">
+    <tr>
+  <th scope="row">Nombre del proyecto:</th>
+  <td key={Project._id}>{Project.name}</td>
+  </tr>
+  <tr>
+  <th scope="row">Presupuesto:</th>
+  <td key={Project.budget}>{Project.budget}</td>
+  </tr>
+  <tr>
+  <th scope="row">Líder:</th>
+  <td key={Project.leader.fullName}>{Project.leader.fullName}</td>
+  </tr>
+  <tr>
+  <th scope="row">Fase:</th>
+    <td key={Project.phase}>{Project.phase}</td>
+    </tr>
+  </table>
+</div>
+
+    {/* <table className="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nombre del proyecto</th>
+      <th scope="col">Objetivo general</th>
+      <th scope="col">Presupuesto</th>
+      <th scope="col">Líder</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Fase</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>que pasa?</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table> */}
+    
+   </>
+  ))}</>
 };
 
 export default Projects;
