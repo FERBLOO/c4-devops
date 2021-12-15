@@ -9,7 +9,7 @@ const Menu = () => {
 
 const handleCloseSession = () => {
   sessionStorage.removeItem("token");
-  window.location('/');
+  window.location.href = '/';
 }
 
   return (
@@ -28,7 +28,7 @@ const handleCloseSession = () => {
             </li>
           </ul>
           <ul className="navbar-nav justify-content-end">
-            {token ? <>Hola, {user?.fullName} <a href="#" onClick={handleCloseSession} className= "nav-item"> </a> </> : (
+            {token ? <> Hola, {user?.name}.     <a href="#" onClick={handleCloseSession} className= "nav-link">      Salir </a></> : (
               <>
                 <li className="nav-item">
                   <Link className="nav-link" to="/users/login">{'Ingresa'}</Link>
