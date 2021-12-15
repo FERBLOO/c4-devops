@@ -9,6 +9,7 @@ import Collapse from '@mui/material/Collapse';
 import Alert from "@mui/material/Alert";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import logo from 'assets/logohome.svg';
 
 const LOGIN = gql`
   mutation Login($email: String!, $password: String!) {
@@ -39,8 +40,10 @@ const Login = () => {
             Usuario o clave inválidas
           </Alert>
         </Collapse>
+        <img src={logo} className="App-logo" alt="logo" />
       </Box>
       <Box gridColumn="2 / span 2">
+      
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}

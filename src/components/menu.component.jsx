@@ -7,6 +7,11 @@ const Menu = () => {
   const token = sessionStorage.getItem('token');
   const user = jwt.decode(token)?.user;
 
+const handleCloseSession = () => {
+  sessionStorage.removeItem("token");
+  window.location.href = '/';
+}
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
@@ -16,14 +21,14 @@ const Menu = () => {
               <Link className="nav-link" to="/">{'Inicio'}</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/projects">{'Projectos'}</Link>
+              <Link className="nav-link" to="/projects">{'Proyectos'}</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/users">{'Usuarios'}</Link>
             </li>
           </ul>
           <ul className="navbar-nav justify-content-end">
-            {token ? <>Hola, {user.fullName}</> : (
+            {token ? <> Hola, {user?.name}.     <a href="#" onClick={handleCloseSession} className= "nav-link">      Salir </a></> : (
               <>
                 <li className="nav-item">
                   <Link className="nav-link" to="/users/login">{'Ingresa'}</Link>

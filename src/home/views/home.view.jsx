@@ -4,24 +4,20 @@ import { Link } from 'react-router-dom';
 
 // assets
 import logo from 'assets/logo.svg';
+//import Carousel from 'src/components/carousel.component';
 
 const Home = () => {
   return (
-    <>
-      <img src={logo} className="App-logo" alt="logo" />
+  <>
+    
+        <img src={logo} className="App-logo" alt="logo"/>
       <p>
-        Edit <code>src/App.js</code> and save to reload.
+       <h1>Proyección-Sistema de Gestión de Proyectos</h1>
       </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
-      <Link to="projects">{'Go to projects'}</Link>
-    </>
+      
+      <Link to="projects">{'Ver los proyectos'}</Link>
+      
+  </>
   );
 };
 
