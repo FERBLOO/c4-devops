@@ -1,6 +1,6 @@
 // vendors
 import React from "react";
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, useMutation, gql } from '@apollo/client';
 
 const USERS = gql `
   query AllUsers {
@@ -13,11 +13,41 @@ const USERS = gql `
   }
 `;
 
+const UPDATE_USER = gql `
+  mutation updateUsers {
+    updateUsers {
+      fullName
+      email
+      name
+      status
+
+    }
+  }
+`;
+
 const Users = () => {
   const { data } = useQuery(USERS);
-  console.log(data);
+  const [updateUser] = useMutation(UPDATE_USER);
 
-  return <>{!data ? <></> : 'Usuarios'}</>
+  const handelUpdate = (_id) => {
+    updateUser({
+      variables: {
+        _id,
+      }
+    });    
+  }
+
+  // console.log(data);
+
+  return <>{!data ? <></> : data?.allusers?.map(user => (
+    <>
+      <div key={user._id}>
+        {user.fullName} -&nbsp;
+        {user.email} &nbsp;
+        {user.status === 'PENDING' ? <button onClick={() => handelUpdate(user._id)}>Aceptar</button> : <></>}
+         </div>
+         </>
+   ))}</>
 };
 
 
