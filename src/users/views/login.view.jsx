@@ -25,6 +25,7 @@ const initialValues = {
 const validationSchema = Yup.object({
   email: Yup.string().email('Correo inválido').required('Campo requerido'),
   password: Yup.string().required('Campo requerido'),
+  
 });
 
 const Login = () => {
