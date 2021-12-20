@@ -1,6 +1,6 @@
 // vendors
 import React from "react";
-import { useQuery, useMutation, gql } from '@apollo/client';
+import { useQuery, gql } from '@apollo/client';
 
 const USERS = gql `
   query AllUsers {
@@ -16,29 +16,29 @@ const USERS = gql `
 `;
 
 
-const UPDATE_USER = gql `
-mutation UpdateUser($input: UpdateInput!) {
-  updateUser(input: $input) {
-    _id
-    status
-  }
-}
+// const UPDATE_USER = gql `
+// mutation UpdateUser($input: UpdateInput!) {
+//   updateUser(input: $input) {
+//     _id
+//     status
+//   }
+// }
 
-`;
+// `;
 const Users = () => {
   const { data } = useQuery(USERS);
   console.log(data);
-  const [updateUser] = useMutation(UPDATE_USER);
+  // const [updateUser] = useMutation(UPDATE_USER);
   
-  const handleUpdate = (_id) => {
-    updateUser({
-      variables: {
-        _id,
-        status
+  // const handleUpdate = (_id) => {
+  //   updateUser({
+  //     variables: {
+  //       _id,
+  //       status
         
-      }
-    })
-  }
+  //     }
+  //   })
+  // }
 
 
   return <>{!data ? <></> : data?.allUsers?.map(user =>(
@@ -60,7 +60,8 @@ const Users = () => {
   <tr>
   <th scope="row">Estado:</th>
     <td key={user.status}>{user.status}</td>
-    <td>{user.status === 'PENDING' ? <button onClick={() => handleUpdate(user._id)}> permitir </button> : <></>}</td>
+    <td>{user.status === 'PENDING' ? <button> Autorizar </button> : <></>}</td>
+    {/* <td>{user.status === 'PENDING' ? <button onClick={() => handleUpdate(user._id)}> permitir </button> : <></>}</td> */}
     <td>{user.status === 'AUTHORIZED' ? <button> denegar </button> : <></>}</td>
     </tr>
   </table>
